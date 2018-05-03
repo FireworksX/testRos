@@ -84,7 +84,7 @@ body{
 }
 
 .elements__more{
-    margin: 0 auto;
+    margin: 30px auto;
     display: block;
     border: none;
     background: #bcc8ff;
@@ -97,7 +97,6 @@ body{
     cursor: pointer;
     outline: none;
     transition: .3s;
-    margin-top: 30px;
 }
 
 .elements__more:hover {

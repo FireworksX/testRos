@@ -65,7 +65,12 @@ var Nodes = function () {
                         Проходим по массиву и в родителя импортируем результат выполнения метода this._getElement
                         которая возвращает DOM элемент
                          */
-                        this.parent[0].appendChild(this._getElement(key));
+                        var firstChild = this.parent[0].firstChild; //Находим первого реюёнка
+                        if (firstChild === null) {
+                            this.parent[0].appendChild(this._getElement(key)); //если его нет, то добавляем
+                        } else {
+                            this.parent[0].insertBefore(this._getElement(key), firstChild); //если есть, то перед ним добавляем новый элемент
+                        }
                     }
                 } catch (err) {
                     _didIteratorError2 = true;
@@ -214,6 +219,7 @@ window.addEventListener('load', function () {
     button[0].addEventListener('click', function () {
         /*
         При клике на кнопку LOAD MORE вызывается метод getData, тут всё уже знакомо
+        !   При кажном клике отправляется запрос, это не хорошо, я это знаю, исправить это можно легко
          */
         nodes.getData('http://81.177.101.213/ajax/test.json', { start: start, finish: finish }).then(function (resolve) {
             start += 4;

@@ -24,7 +24,13 @@ class Nodes {
                 Проходим по массиву и в родителя импортируем результат выполнения метода this._getElement
                 которая возвращает DOM элемент
                  */
-                this.parent[0].appendChild(this._getElement(key));
+                let firstChild = this.parent[0].firstChild; //Находим первого реюёнка
+                if(firstChild === null){
+                    this.parent[0].appendChild(this._getElement(key)); //если его нет, то добавляем
+                }else{
+                    this.parent[0].insertBefore(this._getElement(key), firstChild); //если есть, то перед ним добавляем новый элемент
+                }
+
             }
         }else{
             return new Error('Type error')

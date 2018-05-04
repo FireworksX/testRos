@@ -26,12 +26,6 @@ class Nodes {
                 Проходим по массиву и в родителя импортируем результат выполнения метода this._getElement
                 которая возвращает DOM элемент
                  */
-                // let firstChild = this.parent[0].firstChild; //Находим первого реюёнка
-                // if(firstChild === null){
-                //     this.parent[0].appendChild(this._getElement(key)); //если его нет, то добавляем
-                // }else{
-                //     this.parent[0].insertBefore(this._getElement(key), firstChild); //если есть, то перед ним добавляем новый элемент
-                // }
                 list.appendChild(this._getElement(key));
             }
             let fChild = this.parent[0].firstChild;
@@ -164,7 +158,7 @@ window.addEventListener('load', () => {
     let button = document.getElementsByClassName('elements__more');
     button[0].addEventListener('click', () => {
         /*
-        При клике на кнопку LOAD MORE вызывается метод getData, тут всё уже знакомо
+        При клике на кнопку DOWNLOAD вызывается метод getData, тут всё уже знакомо
         !   При кажном клике отправляется запрос, это не хорошо, я это знаю, исправить это можно легко
          */
         nodes.getData('http://81.177.101.213/ajax/test.json', {start, finish}).then((resolve) => {

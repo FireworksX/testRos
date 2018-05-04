@@ -4,7 +4,7 @@
   "description": "",
   "main": "common.js",
   "scripts": {
-    "start": "babel common.js -d common_es5.js"
+    "start": "babel common.js -d common_es5"
   },
   "keywords": [],
   "author": "",

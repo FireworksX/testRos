@@ -9,9 +9,8 @@ body{
 
 .elements__list{
     list-style-type: none;
-    /*-ms-flex-wrap: wrap;*/
     display: flex;
-    /*flex-wrap: wrap;*/
+    display: -ms-flex;
     justify-content: center;
 }
 
@@ -19,8 +18,6 @@ body{
     margin: 0 10px;
     position: relative;
     overflow: hidden;
-    /*-ms-flex-basis: 23%;*/
-    /*flex-basis: 23%;*/
 }
 
 .elements__item:hover .elements__head{

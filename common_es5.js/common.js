@@ -19,7 +19,9 @@ var Nodes = function () {
     _createClass(Nodes, [{
         key: 'render',
         value: function render(array, isDel) {
-            this.parent = document.getElementsByClassName('elements__list'); // Получаем родителя и определяем его глобально относительно класса
+            var list = document.createElement('ul');
+            list.className = 'elements__list';
+            this.parent = document.getElementsByClassName('wrapper'); // Получаем родителя и определяем его глобально относительно класса
             if (isDel) {
                 /*
                 Если true, то проходим по массиву и востанавливаем удалённые элементы
@@ -32,7 +34,7 @@ var Nodes = function () {
                     for (var _iterator = this.deletedItems[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                         var item = _step.value;
 
-                        this.parent[0].appendChild(item);
+                        item.parent.appendChild(item.element);
                     }
                 } catch (err) {
                     _didIteratorError = true;
@@ -65,12 +67,13 @@ var Nodes = function () {
                         Проходим по массиву и в родителя импортируем результат выполнения метода this._getElement
                         которая возвращает DOM элемент
                          */
-                        var firstChild = this.parent[0].firstChild; //Находим первого реюёнка
-                        if (firstChild === null) {
-                            this.parent[0].appendChild(this._getElement(key)); //если его нет, то добавляем
-                        } else {
-                            this.parent[0].insertBefore(this._getElement(key), firstChild); //если есть, то перед ним добавляем новый элемент
-                        }
+                        // let firstChild = this.parent[0].firstChild; //Находим первого реюёнка
+                        // if(firstChild === null){
+                        //     this.parent[0].appendChild(this._getElement(key)); //если его нет, то добавляем
+                        // }else{
+                        //     this.parent[0].insertBefore(this._getElement(key), firstChild); //если есть, то перед ним добавляем новый элемент
+                        // }
+                        list.appendChild(this._getElement(key));
                     }
                 } catch (err) {
                     _didIteratorError2 = true;
@@ -86,6 +89,9 @@ var Nodes = function () {
                         }
                     }
                 }
+
+                var fChild = this.parent[0].firstChild;
+                this.parent[0].insertBefore(list, fChild);
             } else {
                 return new Error('Type error');
             }
@@ -137,8 +143,9 @@ var Nodes = function () {
                 /*
                 Вешаем обработчик на клик кнопки delete
                  */
-                _this.deletedItems.push(element); //Пушим в глобальный массив
-                _this.parent[0].removeChild(element); //Удаляем элемент
+                var parent = element.parentNode;
+                _this.deletedItems.push({ parent: parent, element: element }); //Пушим в глобальный массив
+                parent.removeChild(element); //Удаляем элемент
             });
 
             return element; //  Возваращаем собранный элемент
@@ -227,8 +234,9 @@ window.addEventListener('load', function () {
             if (finish > count) {
                 //Проверяем чтобы не загружали больше чем можем
                 finish = count;
+            } else {
+                nodes.render(resolve.response);
             }
-            nodes.render(resolve.response);
         }, function (reject) {
             console.log(reject);
         });

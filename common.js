@@ -172,8 +172,9 @@ window.addEventListener('load', () => {
             finish += 4;
             if(finish > count){ //Проверяем чтобы не загружали больше чем можем
                 finish = count;
+            }else{
+                nodes.render(resolve.response);
             }
-            nodes.render(resolve.response);
         }, (reject) => {
             console.log(reject);
         });

@@ -7,13 +7,15 @@ class Nodes {
     }
 
     render(array, isDel) {
-        this.parent = document.getElementsByClassName('elements__list'); // Получаем родителя и определяем его глобально относительно класса
+        let list = document.createElement('ul');
+        list.className = 'elements__list';
+        this.parent = document.getElementsByClassName('wrapper'); // Получаем родителя и определяем его глобально относительно класса
         if(isDel){
             /*
             Если true, то проходим по массиву и востанавливаем удалённые элементы
              */
             for(let item of this.deletedItems){
-                this.parent[0].appendChild(item);
+                item.parent.appendChild(item.element);
             }
             this.deletedItems = [];
             return;
@@ -24,14 +26,16 @@ class Nodes {
                 Проходим по массиву и в родителя импортируем результат выполнения метода this._getElement
                 которая возвращает DOM элемент
                  */
-                let firstChild = this.parent[0].firstChild; //Находим первого реюёнка
-                if(firstChild === null){
-                    this.parent[0].appendChild(this._getElement(key)); //если его нет, то добавляем
-                }else{
-                    this.parent[0].insertBefore(this._getElement(key), firstChild); //если есть, то перед ним добавляем новый элемент
-                }
-
+                // let firstChild = this.parent[0].firstChild; //Находим первого реюёнка
+                // if(firstChild === null){
+                //     this.parent[0].appendChild(this._getElement(key)); //если его нет, то добавляем
+                // }else{
+                //     this.parent[0].insertBefore(this._getElement(key), firstChild); //если есть, то перед ним добавляем новый элемент
+                // }
+                list.appendChild(this._getElement(key));
             }
+            let fChild = this.parent[0].firstChild;
+            this.parent[0].insertBefore(list, fChild)
         }else{
             return new Error('Type error')
         }
@@ -80,8 +84,9 @@ class Nodes {
             /*
             Вешаем обработчик на клик кнопки delete
              */
-            this.deletedItems.push(element); //Пушим в глобальный массив
-            this.parent[0].removeChild(element); //Удаляем элемент
+            let parent = element.parentNode;
+            this.deletedItems.push({parent, element}); //Пушим в глобальный массив
+            parent.removeChild(element); //Удаляем элемент
         });
 
         return element; //  Возваращаем собранный элемент
